@@ -1,4 +1,4 @@
-import { convertToModelMessages, streamText, UIMessage } from "ai";
+import { convertToModelMessages, streamText } from "ai";
 import { supabase } from "@/lib/supabase";
 import { google } from "@ai-sdk/google";
 import { getClientIp } from "@/lib/getClientIp";
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const {
     messages,
     isNewMessage,
-  }: { messages: UIMessage[]; isNewMessage?: boolean } = await req.json();
+  }: { messages: any[]; isNewMessage?: boolean } = await req.json();
 
   // Get user's IP address
   const ipAddress = await getClientIp();
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     } else if (firstMessage && typeof firstMessage === "object") {
       // Extract text from parts array
       if (firstMessage.parts && Array.isArray(firstMessage.parts)) {
-        const textPart = firstMessage.parts.find((p) => p.type === "text");
+        const textPart = firstMessage.parts.find((p: any) => p.type === "text");
 
         titleText = textPart?.text || firstMessage.content || "New Chat";
       } else {
@@ -98,7 +98,7 @@ export async function POST(req: Request) {
     } else if (lastMessage && typeof lastMessage === "object") {
       // Check if message has parts array
       if (lastMessage.parts && Array.isArray(lastMessage.parts)) {
-        const textPart = lastMessage.parts.find((p) => p.type === "text");
+        const textPart = lastMessage.parts.find((p:any) => p.type === "text");
         messageContent = textPart?.text || "";
       } else if (lastMessage.content) {
         // Fallback to content property
