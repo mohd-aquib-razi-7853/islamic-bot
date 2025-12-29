@@ -50,11 +50,7 @@ const ChatBotDemo = () => {
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const hasLoadedHistory = useRef(false);
 
-  const { messages, sendMessage, status, regenerate, setMessages } = useChat({
-    api: "/api/chat",
-    body: { webSearch, isNewMessage: true },
-    initialMessages: [],
-  });
+  const { messages, sendMessage, status, regenerate, setMessages } = useChat();
 
   // Load chat history on mount (only once)
   useEffect(() => {
